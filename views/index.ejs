@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Todo App</title>
+    <style>
+        body { font-family: sans-serif; margin: 2rem; }
+        ul { list-style: none; padding: 0; }
+        li { margin: 0.5rem 0; }
+        .done { text-decoration: line-through; color: grey; }
+    </style>
+</head>
+<body>
+    <h1>Todo List</h1>
+    <form action="/add" method="POST">
+        <input type="text" name="todo" required>
+        <button type="submit">Add</button>
+    </form>
+    <ul>
+        <% todos.forEach((todo, index) => { %>
+            <li class="<%= todo.done ? 'done' : '' %>">
+                <%= todo.text %>
+                <% if (!todo.done) { %>
+                    <form action="/done" method="POST" style="display:inline">
+                        <input type="hidden" name="index" value="<%= index %>">
+                        <button type="submit">✓</button>
+                    </form>
+                <% } %>
+                <form action="/delete" method="POST" style="display:inline">
+                    <input type="hidden" name="index" value="<%= index %>">
+                    <button type="submit">🗑️</button>
+                </form>
+            </li>
+        <% }) %>
+    </ul>
+</body>
+</html>
